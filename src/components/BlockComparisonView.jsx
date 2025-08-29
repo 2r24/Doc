@@ -102,7 +102,12 @@ const BlockComparisonView = ({ leftDocument, rightDocument }) => {
     <div className="space-y-6">
       {/* Summary */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Block-Level Comparison Summary</h3>
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+          Block-Level Comparison Results
+        </h3>
+        <p className="text-sm text-gray-600 mb-4">
+          Comparing paragraphs, tables, and images with exact dimension preservation
+        </p>
         <div className="grid grid-cols-3 gap-4">
           <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
             <div className="text-2xl font-bold text-green-800">{comparisonResult.summary.additions}</div>
@@ -114,21 +119,21 @@ const BlockComparisonView = ({ leftDocument, rightDocument }) => {
           </div>
           <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
             <div className="text-2xl font-bold text-blue-800">{comparisonResult.summary.changes}</div>
-            <div className="text-sm text-blue-600">Total Changes</div>
+            <div className="text-sm text-blue-600">Blocks Modified</div>
           </div>
         </div>
       </div>
 
       {/* Document Comparison */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-4">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 border-b border-gray-200">
-            <h4 className="font-semibold text-gray-800">Original Document</h4>
+            <h4 className="font-semibold text-gray-800">Original Document (v1)</h4>
             <p className="text-sm text-gray-600 truncate">{leftDocument.name}</p>
           </div>
           <div 
             ref={leftContainerRef}
-            className="block-comparison-container p-6 h-96 overflow-y-auto"
+            className="block-comparison-container p-4 h-[600px] overflow-y-auto bg-gray-50"
             style={{ scrollBehavior: 'smooth' }}
           >
             <div 
@@ -140,12 +145,12 @@ const BlockComparisonView = ({ leftDocument, rightDocument }) => {
 
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 border-b border-gray-200">
-            <h4 className="font-semibold text-gray-800">Modified Document</h4>
+            <h4 className="font-semibold text-gray-800">Modified Document (v2)</h4>
             <p className="text-sm text-gray-600 truncate">{rightDocument.name}</p>
           </div>
           <div 
             ref={rightContainerRef}
-            className="block-comparison-container p-6 h-96 overflow-y-auto"
+            className="block-comparison-container p-4 h-[600px] overflow-y-auto bg-gray-50"
             style={{ scrollBehavior: 'smooth' }}
           >
             <div 
@@ -159,21 +164,27 @@ const BlockComparisonView = ({ leftDocument, rightDocument }) => {
       {/* Legend */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <h4 className="text-sm font-semibold text-gray-700 mb-4">Legend</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-3">
             <h5 className="font-medium text-gray-700">Block Changes</h5>
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-3">
-                <div className="w-4 h-4 bg-green-100 border-2 border-green-500 rounded"></div>
-                <span>Added blocks (new content)</span>
+                <div className="w-6 h-4 bg-green-100 border-2 border-green-500 rounded flex items-center justify-center">
+                  <span className="text-green-600 font-bold text-xs">+</span>
+                </div>
+                <span>Added blocks</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-4 h-4 bg-red-100 border-2 border-red-500 rounded"></div>
-                <span>Removed blocks (deleted content)</span>
+                <div className="w-6 h-4 bg-red-100 border-2 border-red-500 rounded flex items-center justify-center">
+                  <span className="text-red-600 font-bold text-xs">−</span>
+                </div>
+                <span>Deleted blocks</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-4 h-4 border-2 border-dashed border-gray-400 rounded"></div>
-                <span>Placeholder (preserves layout)</span>
+                <div className="w-6 h-4 bg-yellow-100 border-2 border-yellow-500 rounded flex items-center justify-center">
+                  <span className="text-yellow-600 font-bold text-xs">~</span>
+                </div>
+                <span>Modified blocks</span>
               </div>
             </div>
           </div>
@@ -182,12 +193,28 @@ const BlockComparisonView = ({ leftDocument, rightDocument }) => {
             <h5 className="font-medium text-gray-700">Text Changes</h5>
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-3">
-                <span className="bg-green-200 text-green-800 px-2 py-1 rounded text-xs">added</span>
-                <span>Words added within paragraphs</span>
+                <span className="bg-green-200 text-green-800 px-3 py-1 rounded text-xs font-bold border-2 border-green-500">added word</span>
+                <span>Added words</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="bg-red-200 text-red-800 px-2 py-1 rounded text-xs line-through">deleted</span>
-                <span>Words removed from paragraphs</span>
+                <span className="bg-red-200 text-red-800 px-3 py-1 rounded text-xs font-bold border-2 border-red-500 line-through">deleted word</span>
+                <span>Deleted words</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="space-y-3">
+            <h5 className="font-medium text-gray-700">Layout Preservation</h5>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-4 border-2 border-dashed border-gray-400 rounded bg-gray-50 flex items-center justify-center">
+                  <span className="text-gray-500 font-bold text-xs">□</span>
+                </div>
+                <span>Placeholder (preserves space)</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-4 bg-gray-100 border border-gray-300 rounded"></div>
+                <span>Original dimensions maintained</span>
               </div>
             </div>
           </div>
