@@ -403,3 +403,145 @@
   background-color: #fffbeb;
   border-radius: 4px;
 }
+
+/* Block-level comparison styles */
+.block-comparison-container {
+  /* Ensure consistent scrolling behavior */
+  scroll-behavior: smooth;
+}
+
+/* Block highlighting styles */
+.word-document-preview .block-added {
+  background-color: #f0fdf4 !important;
+  border: 2px solid #22c55e !important;
+  border-radius: 6px !important;
+  padding: 8px !important;
+  margin: 4px 0 !important;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.15) !important;
+  position: relative;
+}
+
+.word-document-preview .block-deleted {
+  background-color: #fef2f2 !important;
+  border: 2px solid #ef4444 !important;
+  border-radius: 6px !important;
+  padding: 8px !important;
+  margin: 4px 0 !important;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15) !important;
+  position: relative;
+}
+
+.word-document-preview .block-modified {
+  background-color: #fffbeb !important;
+  border: 2px solid #f59e0b !important;
+  border-radius: 6px !important;
+  padding: 8px !important;
+  margin: 4px 0 !important;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15) !important;
+  position: relative;
+}
+
+/* Placeholder styles */
+.word-document-preview .block-placeholder {
+  border: 2px dashed #d1d5db !important;
+  border-radius: 6px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-style: italic !important;
+  font-size: 14px !important;
+  color: #6b7280 !important;
+  margin: 4px 0 !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s ease !important;
+}
+
+.word-document-preview .placeholder-deleted {
+  background-color: #fef2f2 !important;
+  border-color: #fca5a5 !important;
+  color: #991b1b !important;
+}
+
+.word-document-preview .placeholder-added {
+  background-color: #f0fdf4 !important;
+  border-color: #86efac !important;
+  color: #166534 !important;
+}
+
+/* Word-level diff highlighting using diff-match-patch */
+.word-document-preview .diff-added {
+  background-color: #dcfce7 !important;
+  color: #166534 !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+  font-weight: 600 !important;
+  border: 1px solid #bbf7d0 !important;
+  box-shadow: 0 1px 2px rgba(34, 197, 94, 0.1) !important;
+}
+
+.word-document-preview .diff-deleted {
+  background-color: #fecaca !important;
+  color: #991b1b !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+  font-weight: 600 !important;
+  border: 1px solid #fca5a5 !important;
+  box-shadow: 0 1px 2px rgba(239, 68, 68, 0.1) !important;
+  text-decoration: line-through !important;
+}
+
+/* Ensure diff highlights don't break layout */
+.word-document-preview .diff-added,
+.word-document-preview .diff-deleted {
+  display: inline !important;
+  white-space: pre-wrap !important;
+  word-break: normal !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+/* Block type indicators */
+.word-document-preview .block-added::before,
+.word-document-preview .block-deleted::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  height: 4px;
+  border-radius: 4px 4px 0 0;
+}
+
+.word-document-preview .block-added::before {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.word-document-preview .block-deleted::before {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+/* Hover effects for better interaction */
+.word-document-preview .block-added:hover,
+.word-document-preview .block-deleted:hover,
+.word-document-preview .block-modified:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Ensure tables and images maintain their structure in block comparison */
+.word-document-preview .block-added table,
+.word-document-preview .block-deleted table,
+.word-document-preview .block-modified table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+
+.word-document-preview .block-added img,
+.word-document-preview .block-deleted img,
+.word-document-preview .block-modified img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
