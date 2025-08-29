@@ -5,6 +5,7 @@ import DocumentPreview from "./components/DocumentPreview";
 import MiniMap from "./components/MiniMap";
 import ComparisonSummary from "./components/ComparisonSummary";
 import DetailedReport from "./components/DetailedReport";
+import BlockComparisonView from "./components/BlockComparisonView";
 import { compareDocuments, compareHtmlDocuments } from "./utils/textComparison";
 import {
   exportComparisonResults,
@@ -18,6 +19,7 @@ function App() {
   const [comparison, setComparison] = useState(null);
   const [viewMode, setViewMode] = useState("preview");
   const [showDetailed, setShowDetailed] = useState(false);
+  const [comparisonMode, setComparisonMode] = useState("standard"); // "standard" or "block"
 
   const handleDocumentUpload = useCallback((document, position) => {
     if (position === "left") {
@@ -120,6 +122,16 @@ function App() {
                 >
                   Comparison
                 </button>
+                <button
+                  onClick={() => setViewMode("blocks")}
+                  className={`px-4 py-2 rounded-md font-medium transition-all duration-200 ${
+                    viewMode === "blocks"
+                      ? "bg-white text-blue-600 shadow-sm"
+                      : "text-gray-600 hover:text-gray-800"
+                  }`}
+                >
+                  Block View
+                </button>
                 {comparison && (
                   <button
                     onClick={() => setShowDetailed((v) => !v)}
@@ -149,6 +161,14 @@ function App() {
             </button>
           </div>
         </div>
+
+        {/* Block Comparison View */}
+        {leftDocument && rightDocument && viewMode === "blocks" && (
+          <BlockComparisonView 
+            leftDocument={leftDocument}
+            rightDocument={rightDocument}
+          />
+        )}
 
         {/* Comparison Results */}
         {showComparison && viewMode === "comparison" && (
